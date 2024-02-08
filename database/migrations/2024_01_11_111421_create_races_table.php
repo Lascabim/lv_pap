@@ -13,16 +13,18 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('image_path')->default("https://i.imgur.com/0l5iiR7.png");
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->enum('district', [
+                'aveiro', 'beja', 'braga', 'bragança', 'castelo_branco', 'coimbra',
+                'evora', 'faro', 'guarda', 'leiria', 'lisboa', 'portalegre', 'porto',
+                'santarem', 'setubal', 'viana_do_castelo', 'vila_real', 'viseu'
+            ]);
             $table->string('title');
             $table->string('description');
-            $table->enum('minimum_condition', ['low', 'medium', 'high']);
+            $table->enum('minimum_condition', ['iniciante', 'experiente', 'avançado'])->default('iniciante');
             $table->time('start_time');
             $table->time('end_time')->nullable();
             $table->date('date');
             $table->boolean('has_accessibility');
-            $table->string('url');
             $table->timestamps();
         });
     }

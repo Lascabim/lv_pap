@@ -27,3 +27,4 @@ Route::get('/getUser', [UserController::class, 'getUser'])->middleware('auth:san
 Route::get('/checkToken', [UserController::class, 'checkToken'])->middleware('auth:sanctum');
 
 Route::get('/races', [RaceController::class, 'getRaces']);
+Route::post('/createRace', [RaceController::class, 'createRace'])->middleware('auth:sanctum');
