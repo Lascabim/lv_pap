@@ -19,7 +19,7 @@ return new class extends Migration
                 'santarem', 'setubal', 'viana_do_castelo', 'vila_real', 'viseu'
             ]);
             $table->string('title');
-            $table->string('description');
+            $table->string('description');            
             $table->enum('minimum_condition', ['iniciante', 'experiente', 'avançado'])->default('iniciante');
             $table->time('start_time');
             $table->time('end_time')->nullable();

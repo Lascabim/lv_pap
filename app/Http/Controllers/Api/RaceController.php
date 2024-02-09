@@ -26,12 +26,12 @@ class RaceController extends Controller
         $user = $request->user();
 
         if (!$user) {
-            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 404);
+            return response()->json(['success' => false, 'errors' => [['user' => 'Utilizador não encontrado']]], 404);
         }
 
         $fValidator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'description' => 'required|string',
+            'title' => 'required|string|min:10',
+            'description' => 'required|string|min:25',
         ]);
 
         if ($fValidator->fails()) {
@@ -48,21 +48,8 @@ class RaceController extends Controller
             'date' => 'required|date_format:Y-m-d',
             'minimum_condition' => 'required|in:iniciante,experiente,avançado',
             'startTime' => 'required|date_format:H:i:s',
+            'endTime' => 'nullable|date_format:H:i:s|after:startTime',
         ]);
-
-        if ($sValidator->fails()) {
-            return response()->json(['success' => false, 'errors' => $sValidator->errors()->toArray()], 400);
-        }
-
-        if ($request->input('endTime') !==  null && $request->input('endTime') !== "null") {
-            $tValidator = Validator::make($request->all(), [
-                'endTime' => 'nullable|required_with:startTime|date_format:H:i:s|after_or_equal:startTime',
-            ]);
-
-            if ($tValidator->fails()) {
-                return response()->json(['success' => false, 'errors' => $tValidator->errors()->toArray()], 400);
-            }
-        }
 
         $qValidator = Validator::make($request->all(), [
             'district' => [
@@ -83,8 +70,7 @@ class RaceController extends Controller
 
         if ($request->file('image') !==  null) {
             $image = $request->file('image');
-            $filename = $image->getClientOriginalName();
-
+            $filename = 'race_image_' . $raceUniqueName . "." . $image->getClientOriginalExtension();
             $storagePath = 'images/races/';
 
             if (!file_exists(public_path($storagePath))) {
