@@ -20,11 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [UserController::class, 'createUser']);
 Route::post('/login', [UserController::class, 'loginUser']);
 Route::post('/updatePhoto', [UserController::class, 'updatePhoto'])->middleware('auth:sanctum');
+Route::post('/updateCred', [UserController::class, 'updateCred'])->middleware('auth:sanctum');
 Route::post('/updateData', [UserController::class, 'updateData'])->middleware('auth:sanctum');
 
-Route::get('/getAbilities', [AbilityController::class, 'getAbilities'])->middleware('auth:sanctum');
 Route::get('/getUser', [UserController::class, 'getUser'])->middleware('auth:sanctum');
 Route::get('/checkToken', [UserController::class, 'checkToken'])->middleware('auth:sanctum');
+Route::get('/getAbilities', [AbilityController::class, 'getAbilities'])->middleware('auth:sanctum');
 
-Route::get('/races', [RaceController::class, 'getRaces']);
 Route::post('/createRace', [RaceController::class, 'createRace'])->middleware('auth:sanctum');
+Route::get('/races', [RaceController::class, 'getRaces']);

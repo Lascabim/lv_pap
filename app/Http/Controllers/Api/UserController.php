@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use App\Models\User;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -15,30 +16,30 @@ class UserController extends Controller
         $user = $request->user();
 
         if (!$user) {
-            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 404);
+            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 401);
         } else {
             return response()->json(['success' => true, 'errors' => 'Utilizador encontrado'], 200);
         }
     }
     
     public function createUser(Request $request) {
-        $name = $request->input('name');
+        $name = $request->input('nome');
         $email = strtolower($request->input('email'));
     
         $password = $request->input('password');
-        $confirmPassword = $request->input('confirmPassword');
+        $confirmPassword = $request->input('confirmacao_password');
 
         $is_visual = $request->input('is_visual') === 'true' ? 1 : 0;
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:8', 'max:255'],
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'same:password'],
+            'confirmacao_password' => ['required', 'same:password'],
             'is_visual' => ['required'],
         ]);       
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 400);
+            return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 401);
         }
         
         $hashedPassword = Hash::make($password);
@@ -80,7 +81,7 @@ class UserController extends Controller
 
     
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 403);
+            return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 401);
         }
         
         $user = User::where('email', $email)->first();
@@ -108,12 +109,11 @@ class UserController extends Controller
         return response()->json(['success' => true, 'token' => $token, 'user' => $user, 'errors' => null, 'message' => 'Informação do utilizador enviada'], 200);
     }
 
-    public function updatePhoto(Request $request)
-    {
+    public function updatePhoto(Request $request) {
         $user = $request->user();
 
         if (!$user) {
-            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 404);
+            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 401);
         }
 
         $userEmail = $user->email;
@@ -123,7 +123,7 @@ class UserController extends Controller
         ]);
     
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 400);
+            return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 401);
         }
     
         $image = $request->file('image');
@@ -139,24 +139,21 @@ class UserController extends Controller
         return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto de perfil atualizada'], 200);
     }    
 
-    public function updateData(Request $request)
-    {
+    public function updateCred(Request $request) {
         $user = $request->user();
 
         if (!$user) {
-            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado, faz login novamente'], 404);
+            return response()->json(['success' => false, 'errors' => [ 'user' => ['Utilizador não encontrado, faz login novamente']]], 401);
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:8|max:255',
-            // 'username' => 'required|string|min:8|max:255|unique:users,username,' . $user->id,
-            // 'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'required|string|min:8',
             'newPassword' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 401);
         }
 
         if (!Hash::check($request->input('password'), $user->password)) {
@@ -168,13 +165,11 @@ class UserController extends Controller
         ]);
 
         if ($newPasswordValidator->fails()) {
-            return response()->json(['success' => false, 'errors' => $newPasswordValidator->errors()], 422);
+            return response()->json(['success' => false, 'errors' => $newPasswordValidator->errors()], 401);
         }
 
         $user->update([
             'name' => $request->input('name'),
-            // 'username' => $request->input('username'),
-            // 'email' => $request->input('email'),
         ]);
 
         if ($request->has('newPassword')) {
@@ -185,6 +180,57 @@ class UserController extends Controller
 
         return response()->json(['success' => true, 'errors' => null, 'message' => 'Dados atualizados'], 200);
     } 
+
+    public function updateData(Request $request) {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'errors' => [ 'user' => ['Utilizador não encontrado, faz login novamente']]], 401);
+        }
+        
+        $validator = Validator::make($request->all(), [
+            'sexo' => [
+                'required',
+                Rule::in([
+                    'male', 'female', 'other'
+                ]),
+            ],
+            'problemas_visuais' => [
+                'required',
+                Rule::in([
+                    'true', 'false'
+                ]),
+            ],
+            'distrito' => [
+                'required',
+                Rule::in([
+                    'aveiro', 'beja', 'braga', 'bragança', 'castelo_branco', 'coimbra',
+                    'evora', 'faro', 'guarda', 'leiria', 'lisboa', 'portalegre', 'porto',
+                    'santarem', 'setubal', 'viana_do_castelo', 'vila_real', 'viseu'
+                ]),
+            ],
+            'privacidade_do_perfil' => [
+                'required',
+                Rule::in([
+                    'true', 'false'
+                ]),
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 401);
+        } 
+
+        // UPDATE USER DATA
+        $user->sex = $request->input('sexo');
+        $user->is_visual = $request->input('problemas_visuais') === 'true';
+        $user->district = $request->input('distrito');
+        $user->is_profile_public = $request->input('privacidade_do_perfil') === 'true';
+    
+        $user->save();
+
+        return response()->json(['success' => true, 'errors' => null, 'message' => 'Dados atualizados'], 200);
+    }
 
     private function generateUniqueUsername($name) {
         $cleanName = strtolower(str_replace(' ', '', $name));

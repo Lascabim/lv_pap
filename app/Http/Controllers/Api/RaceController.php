@@ -30,29 +30,33 @@ class RaceController extends Controller
         }
 
         $fValidator = Validator::make($request->all(), [
-            'title' => 'required|string|min:10',
-            'description' => 'required|string|min:25',
+            'titulo' => 'required|string|min:10',
+            'descricao' => 'required|string|min:25',
         ]);
 
         if ($fValidator->fails()) {
             return response()->json(['success' => false, 'errors' => $fValidator->errors()->toArray()], 400);
         }
 
-        $raceAc = $request->input('has_accessibility');
+        $raceAc = $request->input('tem_acessibilidade');
 
         if ($raceAc !== 'true' && $raceAc !== 'false') {
-            return response()->json(['success' => false, 'errors' => ['has_accessibility' => ['O campo de acessibilidade é obrigatório']]], 404);
+            return response()->json(['success' => false, 'errors' => ['tem_acessibilidade' => ['O campo de acessibilidade é obrigatório']]], 404);
         }
 
         $sValidator = Validator::make($request->all(), [
-            'date' => 'required|date_format:Y-m-d',
-            'minimum_condition' => 'required|in:iniciante,experiente,avançado',
-            'startTime' => 'required|date_format:H:i:s',
-            'endTime' => 'nullable|date_format:H:i:s|after:startTime',
+            'data' => 'required|date_format:Y-m-d',
+            'condicao_minima' => 'required|in:iniciante,experiente,avançado',
+            'hora_partida' => 'required|date_format:H:i:s',
+            'hora_chegada' => 'required|date_format:H:i:s|after:hora_partida',
         ]);
 
+        if ($sValidator->fails()) {
+            return response()->json(['success' => false, 'errors' => $sValidator->errors()->toArray()], 400);
+        }
+
         $qValidator = Validator::make($request->all(), [
-            'district' => [
+            'distrito' => [
                 'required',
                 Rule::in([
                     'aveiro', 'beja', 'braga', 'bragança', 'castelo_branco', 'coimbra',
@@ -80,37 +84,37 @@ class RaceController extends Controller
             $image->move(public_path($storagePath), $filename);
             $finalPath = $storagePath . $filename;
 
-            $end_time = $request->input('endTime') !== null ? $request->input('endTime') : null;
+            $end_time = $request->input('hora_chegada') !== null ? $request->input('hora_chegada') : null;
 
             $race = new Race([
                 'name' => $raceUniqueName,
                 'image_path' => $finalPath,
-                'district' => $request->input('district'),
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'minimum_condition' => $request->input('minimum_condition'),
-                'start_time' => $request->input('startTime'),
+                'district' => $request->input('distrito'),
+                'title' => $request->input('titulo'),
+                'description' => $request->input('descricao'),
+                'minimum_condition' => $request->input('condicao_minima'),
+                'start_time' => $request->input('hora_partida'),
                 'end_time' => $end_time,
-                'date' => $request->input('date'),
-                'has_accessibility' => $request->input('has_accessibility') === 'true',
+                'date' => $request->input('data'),
+                'has_accessibility' => $request->input('tem_acessibilidade') === 'true',
             ]);
 
             $race->save();
 
             return response()->json(['success' => true, 'errors' => null, 'message' => 'Corrida criada com sucesso'], 200);
         } else {
-            $end_time = $request->input('endTime') !== null ? $request->input('endTime') : null;
+            $end_time = $request->input('hora_chegada') !== null ? $request->input('hora_chegada') : null;
 
             $race = new Race([
                 'name' => $raceUniqueName,
-                'district' => $request->input('district'),
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'minimum_condition' => $request->input('minimum_condition'),
-                'start_time' => $request->input('startTime'),
+                'district' => $request->input('distrito'),
+                'title' => $request->input('titulo'),
+                'description' => $request->input('descricao'),
+                'minimum_condition' => $request->input('condicao_minima'),
+                'start_time' => $request->input('hora_partida'),
                 'end_time' => $end_time,
-                'date' => $request->input('date'),
-                'has_accessibility' => $request->input('has_accessibility') === 'true',
+                'date' => $request->input('data'),
+                'has_accessibility' => $request->input('tem_acessibilidade') === 'true',
             ]);
 
             $race->save();
