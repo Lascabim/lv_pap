@@ -9,11 +9,10 @@ return new class extends Migration
     
     public function up(): void
     {
-
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('username')->default('');
+            $table->string('username')->unique();
             $table->enum('sex', ['male', 'female' ])->nullable();
             $table->boolean('is_visual')->default(true);
             $table->string('email')->unique();

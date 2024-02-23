@@ -86,4 +86,11 @@ return [
     'required_if'          => 'O campo :attribute é obrigatório quando :other é :value.', // Adicionado
     'required_unless'      => 'O campo :attribute é obrigatório exceto quando :other está em :values.', // Adicionado
     'required_with'        => 'O campo :attribute é obrigatório quando :values está presente.',
+    'unique'               => 'O valor informado para o campo :attribute já está em uso.',
+
+    'phone' => 'O campo :attribute deve ser um número de telefone válido.',
+    'password_strength' => 'O campo :attribute deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.',
+    'url_active' => 'O campo :attribute deve ser uma URL ativa e válida.',
+    'date_before_or_equal' => 'O campo :attribute deve ser uma data antes ou igual a :date.',
+    'date_after_or_equal' => 'O campo :attribute deve ser uma data depois ou igual a :date.',
 ];

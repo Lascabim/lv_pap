@@ -46,20 +46,20 @@ class UserController extends Controller
 
         $hashedPassword = Hash::make($password);
         $hasUsername = User::where('username', strtolower($name))->first();
-
+    
         if (!$hasUsername) {
             $user = User::create([
                 'name' => $name,
-                'username' => $name,
+                'username' => strtolower($name),
                 'email' => $email,
                 'password' => $hashedPassword,
                 'is_visual' => $is_visual,
             ]);
 
             return response()->json(['success' => true, 'errors' => null, 'message' => 'Utilizador criado com sucesso'], 201);
-        } else {
+        } else {       
             $username = $this->generateUniqueUsername($name);
-
+            
             $user = User::create([
                 'name' => $name,
                 'username' => $username,
