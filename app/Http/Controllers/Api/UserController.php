@@ -152,8 +152,6 @@ class UserController extends Controller
             return response()->json(['success' => false, 'errors' => ['user' => ['Utilizador não encontrado, faz login novamente']]], 401);
         }
 
-        // return response()->json(['success' => false, 'input' => $request->all()], 401);
-
         if ($request->filled('name') || $request->filled('password') || $request->filled('newPassword')) {
             if ($request->filled('name') && !$request->filled('password')) {
                 $validator = Validator::make($request->all(), [
