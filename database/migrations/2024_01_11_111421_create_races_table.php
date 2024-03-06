@@ -12,15 +12,30 @@ return new class extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('title');
+            $table->longText('description');            
             $table->string('image_path')->default("https://i.imgur.com/0l5iiR7.png");
+            $table->timestamps();
+        });
+
+        Schema::create('race_edition', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('race_id')->constrained('races');
+            $table->string('edition');
             $table->enum('district', [
                 'aveiro', 'beja', 'braga', 'bragança', 'castelo_branco', 'coimbra',
                 'evora', 'faro', 'guarda', 'leiria', 'lisboa', 'portalegre', 'porto',
                 'santarem', 'setubal', 'viana_do_castelo', 'vila_real', 'viseu'
             ]);
-            $table->string('title');
-            $table->string('description');            
-            $table->enum('minimum_condition', ['iniciante', 'experiente', 'avançado'])->default('iniciante');
+            $table->timestamps();
+        });
+
+        Schema::create('race_details', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('race_id')->constrained('races');
+            $table->foreignId('race_edition_id')->constrained('race_edition');
+            $table->enum('type', ['kids', 'adults', 'seniors'])->default('adults');
+            $table->enum('minimum_condition', ['beginner', 'experienced', 'advanced'])->default('beginner');
             $table->time('start_time');
             $table->time('end_time')->nullable();
             $table->date('date');
@@ -33,5 +48,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('races');
+        Schema::dropIfExists('race_edition');
+        Schema::dropIfExists('race_details');
     }
 };

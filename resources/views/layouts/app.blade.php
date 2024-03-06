@@ -18,16 +18,18 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased flex flex-col items-center justify-center">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100 pb-10">
+        <div class="min-h-screen">
             @livewire('navigation-menu')
 
             <main>
                 {{ $slot }}
             </main>
         </div>
+
+        {{-- <x-footer /> --}}
 
         @stack('modals')
 

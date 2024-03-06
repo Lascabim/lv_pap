@@ -12,8 +12,11 @@ class RaceController extends Controller
 {
     public function getRaces(Request $request)
     {
-        $races = Race::orderBy('date', 'desc')->get();
-
+        $races = Race::join('race_edition', 'races.id', '=', 'race_edition.race_id')
+                     ->join('race_details', 'races.id', '=', 'race_details.race_id')
+                     ->orderBy('date', 'desc')
+                     ->get(['races.*', 'race_edition.edition', 'race_edition.district', 'race_details.type', 'race_details.minimum_condition', 'race_details.start_time', 'race_details.end_time', 'race_details.date', 'race_details.has_accessibility']);
+    
         if ($races->isNotEmpty()) {
             return response()->json(['errors' => null, 'message' => 'Races Retrieved', 'races' => $races], 200);
         } else {
@@ -46,7 +49,7 @@ class RaceController extends Controller
 
         $sValidator = Validator::make($request->all(), [
             'data' => 'required|date_format:Y-m-d',
-            'condicao_minima' => 'required|in:iniciante,experiente,avançado',
+            'condicao_minima' => 'required|in:beginner,experienced,advanced',
             'hora_partida' => 'required|date_format:H:i:s',
             'hora_chegada' => 'required|date_format:H:i:s|after:hora_partida',
         ]);
