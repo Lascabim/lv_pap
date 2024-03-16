@@ -16,16 +16,17 @@ return new class extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->enum('sex', ['male', 'female' ])->nullable();
-            $table->boolean('is_visual')->default(true);
+            $table->enum('runner_type', ['atleta', 'guia']);
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_photo_path', 2048)->default("https://i.imgur.com/zHnSsR0.png");
+            $table->string('profile_banner_path', 2048)->default("https://i.imgur.com/72oTVEt.jpg");
             $table->enum('district', [
                 'aveiro', 'beja', 'braga', 'bragança', 'castelo_branco', 'coimbra',
                 'evora', 'faro', 'guarda', 'leiria', 'lisboa', 'portalegre', 'porto',
                 'santarem', 'setubal', 'viana_do_castelo', 'vila_real', 'viseu'
             ])->nullable();
-            $table->boolean('is_profile_public')->nullable();
+            $table->boolean('is_profile_public')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('current_team_id')->nullable();
             $table->rememberToken();

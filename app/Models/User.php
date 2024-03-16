@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password',
         'email',
         'sexo',
-        'is_visual',
+        'runner_type',
         'district',
         'is_profile_public',
     ];

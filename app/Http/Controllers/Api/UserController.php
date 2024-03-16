@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -31,14 +32,13 @@ class UserController extends Controller
         $password = $request->input('password');
         $confirmPassword = $request->input('confirmacao_password');
 
-        $is_visual = $request->input('is_visual') === 'true' ? 1 : 0;
-
         $validator = Validator::make($request->all(), [
             'nome' => ['required', 'string', 'min:8', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'confirmacao_password' => ['required', 'same:password'],
-            'is_visual' => ['required'],
+            'tipo_de_corredor' => ['required', Rule::in(['atleta', 'guia']),
+        ],
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 401);
@@ -53,7 +53,7 @@ class UserController extends Controller
                 'username' => strtolower($name),
                 'email' => $email,
                 'password' => $hashedPassword,
-                'is_visual' => $is_visual,
+                'runner_type' => $request->input('tipo_de_corredor'),
             ]);
 
             return response()->json(['success' => true, 'errors' => null, 'message' => 'Utilizador criado com sucesso'], 201);
@@ -65,7 +65,7 @@ class UserController extends Controller
                 'username' => $username,
                 'email' => $email,
                 'password' => $hashedPassword,
-                'is_visual' => $is_visual,
+                'runner_type' => $request->input('tipo_de_corredor'),
             ]);
 
             return response()->json(['success' => true, 'errors' => null, 'message' => 'Utilizador criado com sucesso'], 201);
@@ -113,6 +113,17 @@ class UserController extends Controller
         return response()->json(['success' => true, 'token' => $token, 'user' => $user, 'errors' => null, 'message' => 'Informação do utilizador enviada'], 200);
     }
 
+    public function getSpecificUser(Request $request)
+    {
+        $user = User::where('username', $request->input('username'))->first();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'user' => null, 'errors' => ['token' => ['Token inválido']]], 401);
+        } else {
+            return response()->json(['success' => true, 'user' => $user], 200);
+        }
+    }
+
     public function updatePhoto(Request $request)
     {
         $user = $request->user();
@@ -132,16 +143,55 @@ class UserController extends Controller
         }
 
         $image = $request->file('image');
-        $filename = uniqid('profile_photo_') . '.' . $image->getClientOriginalExtension();
-        $storagePath = 'images/profile_photos/';
-        $image->move(public_path($storagePath), $filename);
 
-        $finalPath = $storagePath . $filename;
+        if ($request->has('type')) {
+            $type = $request->input('type');
+            if ($type === 'profile_photo') {
+                $filename = uniqid('profile_photo_') . '.' . $image->getClientOriginalExtension();
+                $storagePath = 'images/profile_photos/';
+                $image->move(public_path($storagePath), $filename);
+    
+                $finalPath = $storagePath . $filename;
+    
+                $user->profile_photo_path = $finalPath;
 
-        $user->profile_photo_path = $finalPath;
-        $user->save();
+                $user->save();
+                return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto atualizada'], 200);
+            } elseif ($type === 'profile_banner') {
+                $filename = uniqid('profile_banner_') . '.' . $image->getClientOriginalExtension();
+                $storagePath = 'images/profile_banners/';
+                $image->move(public_path($storagePath), $filename);
+    
+                $finalPath = $storagePath . $filename;
+    
+                $user->profile_banner_path = $finalPath;
 
-        return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto de perfil atualizada'], 200);
+                $user->save();
+                return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto atualizada'], 200);
+            }
+        }
+    }
+
+    public function removePhoto(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 401);
+        }
+
+        if ($request->has('type')) {
+            $type = $request->input('type');
+            if ($type === 'profile_photo') {
+                $user->profile_photo = null;
+                $user->save();
+                return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto removida'], 200);
+            } elseif ($type === 'profile_banner') {
+                $user->profile_banner = null;
+                $user->save();
+                return response()->json(['success' => true, 'errors' => null, 'message' => 'Banner removido'], 200);
+            }
+        }
     }
 
     public function updateCred(Request $request)
@@ -265,7 +315,7 @@ class UserController extends Controller
 
         // UPDATE USER DATA
         $user->sex = $request->input('sexo');
-        $user->is_visual = $request->input('problemas_visuais') === 'true';
+        $user->runner_type = $request->input('tipo_de_corredor');
         $user->district = $request->input('distrito');
         $user->is_profile_public = $request->input('privacidade_do_perfil') === 'true';
 

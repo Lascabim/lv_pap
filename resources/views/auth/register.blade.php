@@ -75,9 +75,9 @@
 
             <div class="mt-4">
                 <div class="flex items-center">
-                    <x-checkbox name="is_visual" id="is_visual"/>
+                    <x-checkbox name="runner_type" id="runner_type"/>
 
-                    <x-label for="is_visual" class="ml-2" value="{{ __('Do you have visual problems?') }}" />
+                    <x-label for="runner_type" class="ml-2" value="{{ __('Do you have visual problems?') }}" />
                 </div>
             </div>
 
