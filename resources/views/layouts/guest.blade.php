@@ -18,7 +18,7 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="h-screen flex flex-col justify-between items-center">
+    <body class="h-screen flex flex-col justify-between">
         <div>
             {{ $slot }}
         </div>
