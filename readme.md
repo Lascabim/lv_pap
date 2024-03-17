@@ -1,6 +1,6 @@
 # Description
 
-This is my backend project for my PAP, along with my React Native Application, I´m creating a running app.
+This is my backend API, using Laravel for my PAP, along with my React Native Application, I´m creating a running app.
 
 # Run Project
 
@@ -8,11 +8,7 @@ This is my backend project for my PAP, along with my React Native Application, I
 
 ```
 php artisan migrate:fresh --seed
-php artisan serve --host 192.168.1.189 --port 8000
+php artisan serve --host {your_ip_adress} --port 8000
 ```
 
-- Run Ngrok
-
-```
-ngrok http 192.168.1.189:8000
-```
+[React Native Application]([markdowns/comments.md](https://github.com/lascabim/rn_pap))
