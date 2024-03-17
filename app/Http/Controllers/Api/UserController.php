@@ -183,11 +183,11 @@ class UserController extends Controller
         if ($request->has('type')) {
             $type = $request->input('type');
             if ($type === 'profile_photo') {
-                $user->profile_photo = null;
+                $user->profile_photo_path = null;
                 $user->save();
                 return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto removida'], 200);
             } elseif ($type === 'profile_banner') {
-                $user->profile_banner = null;
+                $user->profile_banner_path = null;
                 $user->save();
                 return response()->json(['success' => true, 'errors' => null, 'message' => 'Banner removido'], 200);
             }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->enum('runner_type', ['atleta', 'guia']);
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profile_photo_path', 2048)->default("https://i.imgur.com/zHnSsR0.png");
-            $table->string('profile_banner_path', 2048)->default("https://i.imgur.com/72oTVEt.jpg");
+            $table->string('profile_photo_path', 2048)->default("https://i.imgur.com/zHnSsR0.png")->nullable();
+            $table->string('profile_banner_path', 2048)->default("https://i.imgur.com/72oTVEt.jpg")->nullable();
             $table->enum('district', [
                 'aveiro', 'beja', 'braga', 'bragança', 'castelo_branco', 'coimbra',
                 'evora', 'faro', 'guarda', 'leiria', 'lisboa', 'portalegre', 'porto',
