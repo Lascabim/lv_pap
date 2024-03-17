@@ -18,11 +18,12 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
+    <body class="h-screen flex flex-col justify-between items-center">
+        <div>
             {{ $slot }}
         </div>
 
+        <x-footer/>
         @livewireScripts
     </body>
 </html>

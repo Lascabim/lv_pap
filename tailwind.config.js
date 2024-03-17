@@ -19,7 +19,7 @@ export default {
         },
 
         screens: {
-            'tele': {'max': '639px'},
+            // 'tele': {'max': '639px'},
             // => @media (max-width: 639px) { ... }
 
             'sm': '640px',
