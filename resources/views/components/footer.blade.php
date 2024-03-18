@@ -1,12 +1,12 @@
 <div class="flex justify-center items-center w-full py-4 bg-stone-900 text-white">
   <div class="max-w-[1140px] flex items-center w-full justify-between flex-col sm:flex-row gap-12 sm:gap-0">
-    <div class="flex flex-col flex-1 items-center text-center h-full">
-      <div class="px-4">
-        <p class="font-bold">O lema do Projeto Sexto Sentido é que o desporto é para todos!</p>
+    <div class="flex flex-col items-center h-full gap-2">
+      <div>
+        <p class="font-bold text-center px-3 lg:px-0">O lema do Projeto Sexto Sentido é que o desporto é para todos!</p>
       </div>
     </div>
   
-    <div class="flex flex-col flex-1 items-center text-center h-full gap-2 px-4">
+    <div class="flex flex-col items-center h-full gap-2">
       <h1 class="font-bold">Patrocionadores</h1>
       
       <div>
@@ -16,7 +16,7 @@
       </div>
     </div>
   
-    <div class="flex flex-col flex-1 items-center text-center h-full gap-2 px-4">
+    <div class="flex flex-col items-center h-full gap-2">
       <h1 class="font-bold">Redes Sociais</h1>
   
       <div class="flex flex-col">

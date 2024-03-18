@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\RaceController;
+use App\Models\Story;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/welcome', function () {
-    return view('welcome');
-})->name('welcome');
-
-Route::get('/chats', function () {
-    return view('welcome');
-})->name('chats');
+Route::get('/', [Controller::class, 'loadHomePage']);
+Route::get('/welcome', [Controller::class, 'loadHomePage'])->name('welcome');
+Route::get('/chats', [Controller::class, 'loadHomePage'])->name('chats');
 
 Route::get('/faq', function () {
     return view('faq');
@@ -37,7 +31,6 @@ Route::get('/faq#visibility', function () {
 Route::get('/faq#condition', function () {
     return view('faq');
 })->name('faq/condition');
-
 
 Route::get('/create_races', function () {
     return view('race_creation');

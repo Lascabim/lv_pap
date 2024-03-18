@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             RaceSeeder::class,
-            AbilitySeeder::class
+            AbilitySeeder::class,
+            StorySeeder::class
         ]);
 
         \App\Models\User::factory(10)->create();
