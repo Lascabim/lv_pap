@@ -1,7 +1,6 @@
-<div class="flex flex-col items-center justify-center pt-12">
+<div class="flex flex-col items-center justify-center pt-24">
   <div class="max-w-[1140px] relative flex flex-col justify-center items-center self-center gap-4">
     <x-title text="BIOGRAFIA"/>
-
 
     <x-subtitle text="O Projeto Sexto Sentido é um projeto de inclusão social no desporto, que permite que pessoas cegas ou com baixa visão possam realizar corrida e caminhada guiada. O grupo sediado no Porto, gostaria de chegar a todo o território nacional."/>
   
@@ -10,6 +9,7 @@
       O lema do Projeto Sexto Sentido é que o desporto é para todos!"/>
 
     <p class="text-xl text-[#322E40]">Inscrição de atletas e guias:
+      <x-break-line/>
       <a class="font-bold text-[#0185ea]" href="https://docs.google.com/forms/d/e/1FAIpQLScrJsT2oi7lc0Lr4mzpACZy21kXvoN3XQqqdtH9YPIidvdtNw/viewform"> Projeto Sexto Sentido PT</a>
     </p>
   </div>  

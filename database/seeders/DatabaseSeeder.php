@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RaceSeeder::class,
             AbilitySeeder::class,
-            StorySeeder::class
+            CategorySeeder::class,
+            StorySeeder::class,
         ]);
 
         \App\Models\User::factory(10)->create();

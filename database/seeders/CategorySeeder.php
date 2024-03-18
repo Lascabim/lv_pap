@@ -17,18 +17,17 @@ class CategorySeeder extends Seeder
         DB::table('categories')->delete();
 
         $category = Category::create([
-            'name' => 'Cidadania e Desenvolvimento',
-            'slug' => 'ced',
+            'name' => 'Sapo',
+            'slug' => 'sapo',
+            'image' => '/assets/categories/sapo.jpg',
+            'description' => 'Sapo.PT',
         ]);
 
         $category = Category::create([
-            'name' => 'Interculturalidade',
-            'slug' => 'interculturalidade',
-        ]);
-
-        $category = Category::create([
-            'name' => 'Saúde',
-            'slug' => 'saude',
+            'name' => 'PT Runners',
+            'slug' => 'pt_runners',
+            'image' => '/assets/stories/categories/pro_runners.png',
+            'description' => 'Sapo.PT',
         ]);
     }
 }
