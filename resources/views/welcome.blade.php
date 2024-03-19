@@ -1,5 +1,5 @@
-<x-guest-layout>
+<x-app-layout>
   <x-hero/>
   <x-biography/>
   <x-stories :stories="$stories"/>
-</x-guest-layout>
+</x-app-layout>

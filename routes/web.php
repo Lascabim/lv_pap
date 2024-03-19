@@ -17,16 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Controller::class, 'loadHomePage']);
+Route::get('/home', [Controller::class, 'loadHomePage'])->name('home');
 Route::get('/welcome', [Controller::class, 'loadHomePage'])->name('welcome');
-Route::get('/chats', [Controller::class, 'loadHomePage'])->name('chats');
 
 Route::get('/faq', function () {
     return view('faq');
 })->name('faq');
 
-Route::get('/faq#visibility', function () {
+Route::get('/faq#runner_type', function () {
     return view('faq');
-})->name('faq/visibility');
+})->name('faq/runner_type');
 
 Route::get('/faq#condition', function () {
     return view('faq');

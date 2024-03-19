@@ -17,9 +17,11 @@
 
           <img src="{{ $story->image }}" class="w-full rounded-lg my-6 drop-shadow-md " alt="">
 
-          <button class="w-full bg-[#0185ea] py-3 rounded-lg">
-            <a href="{{ $story->url }}" class="font-bold text-lg text-white">VER DETALHES</a>
-          </button>
+            <a href="{{ $story->url }}" class="font-bold text-lg text-white">
+              <button class="w-full bg-[#0185ea] py-3 rounded-lg">
+                VER DETALHES
+              </button>
+            </a>
         </div>
       @endforeach
     </div>
