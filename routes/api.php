@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AbilityController;
 use App\Http\Controllers\Api\RaceController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\StoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,6 @@ Route::get('/getAbilities', [AbilityController::class, 'getAbilities'])->middlew
 
 Route::post('/createRace', [RaceController::class, 'createRace'])->middleware('auth:sanctum');
 Route::get('/races', [RaceController::class, 'getRaces']);
+
+Route::get('/stories', [StoryController::class, 'getStories']);
+
