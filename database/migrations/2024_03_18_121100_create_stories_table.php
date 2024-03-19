@@ -21,14 +21,6 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->timestamps();
         });
-
-        Schema::create('category_story', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('story_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-        });
-
     }
 
     /**
@@ -36,7 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_story');
         Schema::dropIfExists('stories');
     }
 };

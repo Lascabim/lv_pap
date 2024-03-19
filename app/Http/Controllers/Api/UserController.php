@@ -135,7 +135,8 @@ class UserController extends Controller
         $userEmail = $user->email;
 
         $validator = Validator::make($request->all(), [
-            'image' => ['required', 'image', 'max:2048'],
+            // 'image' => ['required', 'image', 'max:2048'],
+            'image' => ['required', 'image'],
         ]);
 
         if ($validator->fails()) {

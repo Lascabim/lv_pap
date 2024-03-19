@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RaceSeeder::class,
             AbilitySeeder::class,
-            CategorySeeder::class,
             StorySeeder::class,
         ]);
 
