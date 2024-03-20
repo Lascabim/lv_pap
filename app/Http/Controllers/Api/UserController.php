@@ -127,57 +127,48 @@ class UserController extends Controller
     public function updatePhoto(Request $request)
     {
         $user = $request->user();
-    
+
         if (!$user) {
             return response()->json(['success' => false, 'errors' => 'Utilizador não encontrado'], 401);
         }
-    
+
         $userEmail = $user->email;
-    
+
         $validator = Validator::make($request->all(), [
-            'image' => ['required', 'image'],
+            'image' => ['required', 'image', 'max:2048'],
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()], 401);
         }
-    
+
         $image = $request->file('image');
-    
-        // Check image size
-        $imageSize = $image->getSize(); // in bytes
-        $maxSize = 1.5 * 1024 * 1024; // 1.5MB in bytes
-    
-        if ($imageSize > $maxSize) {
-            // Resize the image
-            $resizedImage = Image::make($image)->resize(null, 800, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->encode($image->getClientOriginalExtension(), 75);
-    
-            $filename = uniqid('profile_photo_') . '.' . $image->getClientOriginalExtension();
-            $storagePath = 'images/profile_photos/';
-            $resizedImage->save(public_path($storagePath . $filename));
-    
-            $finalPath = $storagePath . $filename;
-        } else {
-            $filename = uniqid('profile_photo_') . '.' . $image->getClientOriginalExtension();
-            $storagePath = 'images/profile_photos/';
-            $image->move(public_path($storagePath), $filename);
-    
-            $finalPath = $storagePath . $filename;
-        }
-    
+
         if ($request->has('type')) {
             $type = $request->input('type');
             if ($type === 'profile_photo') {
-                $user->profile_photo_path = $finalPath;
-            } elseif ($type === 'profile_banner') {
-                $user->profile_banner_path = $finalPath;
-            }
+                $filename = uniqid('profile_photo_') . '.' . $image->getClientOriginalExtension();
+                $storagePath = 'images/profile_photos/';
+                $image->move(public_path($storagePath), $filename);
     
-            $user->save();
-            return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto atualizada'], 200);
+                $finalPath = $storagePath . $filename;
+    
+                $user->profile_photo_path = $finalPath;
+
+                $user->save();
+                return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto atualizada'], 200);
+            } elseif ($type === 'profile_banner') {
+                $filename = uniqid('profile_banner_') . '.' . $image->getClientOriginalExtension();
+                $storagePath = 'images/profile_banners/';
+                $image->move(public_path($storagePath), $filename);
+    
+                $finalPath = $storagePath . $filename;
+    
+                $user->profile_banner_path = $finalPath;
+
+                $user->save();
+                return response()->json(['success' => true, 'errors' => null, 'message' => 'Foto atualizada'], 200);
+            }
         }
     }
 
