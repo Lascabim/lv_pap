@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
