@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('race_edition', function (Blueprint $table) {
+        Schema::create('race_editions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('race_id')->constrained('races');
             $table->string('edition');
@@ -33,7 +33,7 @@ return new class extends Migration
         Schema::create('race_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('race_id')->constrained('races');
-            $table->foreignId('race_edition_id')->constrained('race_edition');
+            $table->foreignId('race_edition_id')->constrained('race_editions');
             $table->enum('type', ['kids', 'adults', 'seniors'])->default('adults');
             $table->enum('minimum_condition', ['beginner', 'experienced', 'advanced'])->default('beginner');
             $table->time('start_time');
@@ -48,7 +48,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('races');
-        Schema::dropIfExists('race_edition');
+        Schema::dropIfExists('race_editions');
         Schema::dropIfExists('race_details');
     }
 };

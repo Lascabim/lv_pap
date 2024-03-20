@@ -4,7 +4,7 @@
 
     <div class="mt-6 flex flex-wrap justify-around gap-14 px-4 lg:px-0">
       @foreach($stories as $story)
-        <div class="bg-gray-100 px-3 py-3 shadow-md rounded-xl w-full lg:w-[500px]">
+        <div class="bg-white px-3 py-3 shadow-md rounded-xl w-full lg:w-[500px]">
           <div>
             <h1 class="text-xl font-bold uppercase mb-4 text-[#0185ea]">{{ $story->title }}</h1>
             @if($story->subtitle)

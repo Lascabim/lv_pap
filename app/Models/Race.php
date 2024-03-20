@@ -21,4 +21,8 @@ class Race extends Model
         'has_accessibility',
         'image_path',
     ];
+
+    public function editions() {
+        return $this->hasMany(RaceEdition::class);
+    }
 }

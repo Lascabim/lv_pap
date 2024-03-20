@@ -9,12 +9,12 @@ use App\Models\User;
 class RaceController extends Controller
 {
     public function getRaces() {
-        $races = Race::all()->sortByDesc("date");
+        $races = Race::with('editions.details')->orderByDesc('created_at')->get();
     
         return view('races', [
             'heading' => 'Races Page',
-            'races' => Race::all()->sortByDesc("date"),
+            'races' => $races,
             'users' => User::all()
         ]);
-    }
+    }    
 }

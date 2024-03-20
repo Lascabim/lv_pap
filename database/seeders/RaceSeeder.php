@@ -27,7 +27,7 @@ O percurso não é apenas uma corrida, mas uma expressão coletiva de liberdade,
         ]);
 
         // Insert race edition
-        $raceEditionId = DB::table('race_edition')->insertGetId([
+        $editionId = DB::table('race_editions')->insertGetId([
             'race_id' => $raceId,
             'edition' => '2024',
             'district' => 'porto',
@@ -38,7 +38,7 @@ O percurso não é apenas uma corrida, mas uma expressão coletiva de liberdade,
         // Insert race details
         DB::table('race_details')->insert([
             'race_id' => $raceId,
-            'race_edition_id' => $raceEditionId,
+            'race_edition_id' => $editionId,
             'type' => 'kids',
             'minimum_condition' => 'beginner',
             'start_time' => '16:00',
@@ -51,7 +51,7 @@ O percurso não é apenas uma corrida, mas uma expressão coletiva de liberdade,
 
         DB::table('race_details')->insert([
             'race_id' => $raceId,
-            'race_edition_id' => $raceEditionId,
+            'race_edition_id' => $editionId,
             'type' => 'adults',
             'minimum_condition' => 'advanced',
             'start_time' => '16:00',
@@ -64,7 +64,7 @@ O percurso não é apenas uma corrida, mas uma expressão coletiva de liberdade,
 
         DB::table('race_details')->insert([
             'race_id' => $raceId,
-            'race_edition_id' => $raceEditionId,
+            'race_edition_id' => $editionId,
             'type' => 'seniors',
             'minimum_condition' => 'beginner',
             'start_time' => '16:00',
@@ -92,7 +92,7 @@ As cores das bandeiras de diferentes nações tremulam no ar, enquanto o pulsar 
         ]);
 
         // Insert race edition
-        $raceEditionId2 = DB::table('race_edition')->insertGetId([
+        $editionId2 = DB::table('race_editions')->insertGetId([
             'race_id' => $raceId2,
             'edition' => '2024',
             'district' => 'faro',
@@ -102,7 +102,7 @@ As cores das bandeiras de diferentes nações tremulam no ar, enquanto o pulsar 
 
         DB::table('race_details')->insert([
             'race_id' => $raceId2,
-            'race_edition_id' => $raceEditionId2,
+            'race_edition_id' => $editionId2,
             'type' => 'adults',
             'minimum_condition' => 'advanced',
             'start_time' => '16:00',

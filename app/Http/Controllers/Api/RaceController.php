@@ -12,10 +12,10 @@ class RaceController extends Controller
 {
     public function getRaces(Request $request)
     {
-        $races = Race::join('race_edition', 'races.id', '=', 'race_edition.race_id')
+        $races = Race::join('race_editions', 'races.id', '=', 'race_editions.race_id')
                      ->join('race_details', 'races.id', '=', 'race_details.race_id')
                      ->orderBy('date', 'desc')
-                     ->get(['races.*', 'race_edition.edition', 'race_edition.district', 'race_details.type', 'race_details.minimum_condition', 'race_details.start_time', 'race_details.end_time', 'race_details.date', 'race_details.has_accessibility']);
+                     ->get(['races.*', 'race_editions.edition', 'race_editions.district', 'race_details.type', 'race_details.minimum_condition', 'race_details.start_time', 'race_details.end_time', 'race_details.date', 'race_details.has_accessibility']);
     
         if ($races->isNotEmpty()) {
             return response()->json(['errors' => null, 'message' => 'Races Retrieved', 'races' => $races], 200);
