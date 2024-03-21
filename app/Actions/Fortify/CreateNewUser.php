@@ -26,10 +26,22 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
+        $username = $this->generateUniqueUsername($input['name']);
+
         return User::create([
             'name' => $input['name'],
+            'username' =>  $username,
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+    }
+
+    private function generateUniqueUsername($name)
+    {
+        $cleanName = strtolower(str_replace(' ', '', $name));
+        $count = User::where('username', $cleanName)->count();
+        $username = $count > 0 ? $cleanName . ($count + 1) : $cleanName;
+
+        return $username;
     }
 }

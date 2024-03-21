@@ -2,7 +2,7 @@
   <div class="max-w-[1140px] relative flex flex-col justify-center items-center self-center gap-4">
     <x-title text="NOTÍCIAS"/>
 
-    <div class="mt-6 flex flex-wrap justify-around gap-14 px-4 lg:px-0">
+    <div class="mt-6 flex flex-wrap justify-center gap-12 px-4 lg:px-0">
       @foreach($stories as $story)
         <div class="bg-white px-3 py-3 shadow-md rounded-xl w-full lg:w-[500px]">
           <div>

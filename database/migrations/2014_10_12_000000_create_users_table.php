@@ -26,6 +26,7 @@ return new class extends Migration
                 'evora', 'faro', 'guarda', 'leiria', 'lisboa', 'portalegre', 'porto',
                 'santarem', 'setubal', 'viana_do_castelo', 'vila_real', 'viseu'
             ])->nullable();
+            $table->bigInteger('joined_races')->default(0);
             $table->boolean('is_profile_public')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('current_team_id')->nullable();

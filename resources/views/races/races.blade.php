@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center justify-center py-12 px-4 lg:px-0">
     <x-title text="CORRIDAS"/>
   
-    <div class="max-w-[1140px] w-full flex flex-wrap justify-between items-center self-center pt-8 drop-shadow-lg">
+    <div class="max-w-[1140px] w-full flex flex-wrap justify-center items-center self-center gap-12 pt-8 drop-shadow-lg">
 
       @foreach($races as $race)
       <div class="bg-white flex flex-col justify-between gap-4 py-6 px-6 rounded-lg shadow-xl">

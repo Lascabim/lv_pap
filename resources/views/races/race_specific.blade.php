@@ -15,8 +15,8 @@
 
                       <div class="flex flex-col gap-12">
                           @foreach($edition->details as $detail)
-                          <div class="bg-gray-100 flex items-center gap-5 p-4 rounded-md">
-                            <input type="radio" class="p-2 border-2 border-transparent rounded-md border-stone-400 focus:border-blue-500" id="{{ $detail->id }}" name="detail_radio_group_{{ $edition->id }}">
+                          <div class="bg-gray-200 flex items-center gap-5 p-4 rounded-md shadow-sm">
+                            <input type="radio" class="p-2 border-2 rounded-md border-stone-400 focus:border-blue-500" id="{{ $detail->id }}" name="detail_radio_group_{{ $edition->id }}">
                                   <div class="w-full">
                                       @php
                                           $type_translation = '';
