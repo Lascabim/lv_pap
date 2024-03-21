@@ -33,10 +33,11 @@ Route::get('/faq#condition', function () {
 })->name('faq/condition');
 
 Route::get('/create_races', function () {
-    return view('race_creation');
+    return view('races.race_creation');
 })->name('create_races')->middleware('can:create_races');
 
 Route::get('/races', [RaceController::class, 'getRaces'])->name('races');
+Route::get('/race/{name}', [RaceController::class, 'getSpecificRace'])->name('race');
 
 Route::middleware([
     'auth:sanctum',
