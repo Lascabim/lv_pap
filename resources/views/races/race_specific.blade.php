@@ -13,7 +13,7 @@
                           <h2 class="flex items-center gap-2 font-[400] text-center text-lg capitalize"><i class="fa-solid fa-earth-europe"></i> Distrito: <p class="font-bold">{{ $edition->district }}</p></h2>
                       </div>
 
-                      <div class="flex flex-col gap-12">
+                      <div class="flex flex-col gap-12"> 
                           @foreach($edition->details as $detail)
                           <div class="bg-gray-200 flex items-center gap-5 p-4 rounded-md shadow-sm">
                             <input type="radio" class="p-2 border-2 rounded-md border-stone-400 focus:border-blue-500" id="{{ $detail->id }}" name="detail_radio_group_{{ $edition->id }}">
@@ -78,9 +78,19 @@
                   @endforeach
               </div>
 
-              <x-new-button>
-                  INCREVER-ME
-              </x-new-button>
+            @if (Auth::check())
+              <a href="{{ route('login') }}">
+                <x-new-button>
+                    INCREVER-ME
+                </x-new-button>
+              </a>
+            @else
+                <a href="{{ route('login') }}">
+                    <x-new-button>
+                        INICIAR SESSÃO
+                    </x-new-button>
+                </a>
+            @endif
           </div>
       </div>
   </div>
