@@ -12,3 +12,15 @@ php artisan serve --host {your_ip_adress} --port 8000
 ```
 
 [React Native Application]([markdowns/comments.md](https://github.com/lascabim/rn_pap))
+
+# To Do List
+
+```
+
+Search Bar in the Race Screens
+Filters (Condition, Type, District)
+Email Verification
+Forgot Password
+Translate Auth Screens + Options
+
+```
