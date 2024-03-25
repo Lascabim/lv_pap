@@ -27,8 +27,19 @@
                 <x-label for="photo" value="{{ __('Photo') }}" />
 
                 <!-- Current Profile Photo -->
-                <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                <div class="mt-2" x-show="!photoPreview">
+                    @php
+                        $profilePhotoUrl = $this->user->profile_photo_url;
+                        $afterStorage = Str::after($profilePhotoUrl, 'http://localhost/storage/');
+                        $startsWithHTTP = Str::startsWith($afterStorage, ['http://', 'https://']);
+                        if($startsWithHTTP) {
+                            $finalUrl = $afterStorage;
+                        } else {
+                            $finalUrl = env('APP_URL') . '/' . ltrim($afterStorage, '/');
+                        }
+                    @endphp
+
+                    <img src="{{ $finalUrl }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->

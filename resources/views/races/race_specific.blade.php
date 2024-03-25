@@ -5,7 +5,11 @@
       <div class="max-w-[1140px] w-full flex flex-wrap justify-center items-center self-center py-8 drop-shadow-lg">
           <div class="bg-white flex flex-col justify-between gap-4 py-6 px-6 rounded-lg shadow-xl">
               <div class="sm:w-[500px]">
-                  <img class="w-full rounded-md" src="{{ $race->image_path }}" alt="">
+                    @if (Str::startsWith($race->image_path, 'http'))
+                      <img class="w-full rounded-md mb-4" src="{{ $race->image_path }}" alt="">
+                    @else
+                      <img class="w-full rounded-md mb-4" src="{{ env('APP_URL') . '/' . ltrim($race->image_path, '/') }}" alt="">
+                    @endif
 
                   @foreach($race->editions as $edition)
                       <div class="flex justify-around mb-6 font-bold">
@@ -79,13 +83,13 @@
               </div>
 
             @if (Auth::check())
-              <a href="{{ route('login') }}">
+              <a class="mt-4" href="{{ route('login') }}">
                 <x-new-button>
                     INCREVER-ME
                 </x-new-button>
               </a>
             @else
-                <a href="{{ route('login') }}">
+                <a class="mt-4" href="{{ route('login') }}">
                     <x-new-button>
                         INICIAR SESSÃO
                     </x-new-button>

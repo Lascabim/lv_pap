@@ -85,8 +85,19 @@
                         <x-slot name="trigger">
                         @if (Auth::check())
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">  
+                                    @php
+                                        $profilePhotoUrl = Auth::user()->profile_photo_url;
+                                        $afterStorage = Str::after($profilePhotoUrl, 'http://localhost/storage/');
+                                        $startsWithHTTP = Str::startsWith($afterStorage, ['http://', 'https://']);
+                                        if($startsWithHTTP) {
+                                            $finalUrl = $afterStorage;
+                                        } else {
+                                            $finalUrl = env('APP_URL') . '/' . ltrim($afterStorage, '/');
+                                        }
+                                    @endphp
+
+                                    <img class="h-10 w-10 rounded-full object-cover" src="{{ $finalUrl }}" alt="{{ Auth::user()->name }}" />
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
@@ -188,7 +199,18 @@
                 @if (Auth::check())
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                         <div class="shrink-0 mr-3">
-                            <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                            @php
+                                $profilePhotoUrl = Auth::user()->profile_photo_url;
+                                $afterStorage = Str::after($profilePhotoUrl, 'http://localhost/storage/');
+                                $startsWithHTTP = Str::startsWith($afterStorage, ['http://', 'https://']);
+                                if($startsWithHTTP) {
+                                    $finalUrl = $afterStorage;
+                                } else {
+                                    $finalUrl = env('APP_URL') . '/' . ltrim($afterStorage, '/');
+                                }
+                            @endphp
+
+                            <img class="h-10 w-10 rounded-full object-cover" src="{{ $finalUrl }}" alt="{{ Auth::user()->name }}" />
                         </div>
                     @endif
 
