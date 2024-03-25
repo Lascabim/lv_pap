@@ -86,7 +86,8 @@ O percurso não é apenas uma corrida, mas uma expressão coletiva de liberdade,
 Corredores de todas as origens se alinham, seus passos ecoando histórias de perseverança e sucesso. 
 
 As cores das bandeiras de diferentes nações tremulam no ar, enquanto o pulsar da diversidade cria uma atmosfera única de união e respeito.',
-            'image_path' => 'images/races/race_image_race_65cb824c3f0c9.jpg',
+            'image_path' => 'https://i.imgur.com/HMuDVJW.jpg',
+
             'created_at' => now(),
             'updated_at' => now(),
         ]);
