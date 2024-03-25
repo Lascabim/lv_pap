@@ -39,6 +39,7 @@ Route::get('/create_races', function () {
 
 Route::get('/races', [RaceController::class, 'getRaces'])->name('races');
 Route::get('/race/{name}', [RaceController::class, 'getSpecificRace'])->name('race');
+Route::get('/join_race/{race_id}/{user}', [RaceController::class, 'joinRace'])->name('join_race');
 
 Route::middleware([
     'auth:sanctum',

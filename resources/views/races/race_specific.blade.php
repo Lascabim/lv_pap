@@ -83,11 +83,11 @@
               </div>
 
             @if (Auth::check())
-              <a class="mt-4" href="{{ route('login') }}">
-                <x-new-button>
-                    INCREVER-ME
-                </x-new-button>
-              </a>
+                <a class="mt-4" href="{{ route('join_race', ['race_id' => $race->id, 'user' => Auth::user()]) }}">
+                    <x-new-button>
+                        INCREVER-ME
+                    </x-new-button>
+                </a>
             @else
                 <a class="mt-4" href="{{ route('login') }}">
                     <x-new-button>
